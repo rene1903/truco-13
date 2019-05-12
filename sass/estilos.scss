@@ -1,0 +1,64 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: darken(steelblue,10);
+}
+.container {
+    $ancho:250px;
+    $alto:300px;
+    $borde-color:lightgray;
+    $borde-width:2px;
+    @function restov(){
+        @return -($alto - $borde-width);
+    }
+    @function restoh(){
+        @return ($ancho - $borde-width);
+    }
+    box-sizing: border-box;
+    width: $ancho;
+    height: $alto;
+    margin: 2em auto;
+    padding: 1em;
+    background: darken(steelblue,20);
+    color: #eee;
+    font-size: 2.3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 0 0 3px darken(steelblue,30);
+    position: relative;
+
+    &::before,
+    &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 0;
+        background: $borde-color;
+        transition: all .3s;
+    }
+    &::before {
+        height: $borde-width;
+        width: 0;
+        bottom: 0;
+        box-shadow: $ancho restov() $borde-color;
+    }
+    &::after {
+        top: 0;
+        height: 0;
+        width: $borde-width;
+        box-shadow: restoh() $alto $borde-color;
+    }
+    &:hover {
+        &::after {
+            height: 100%;
+            box-shadow: restoh() 0px $borde-color;
+        }
+        &::before {
+            width: 100%;
+            box-shadow: 0 restov() $borde-color;
+        }
+    }
+}
